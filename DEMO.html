@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        BDKSPLITTING DEMO</title>
+    <style>
+   @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+:root {
+  --background: #ffffff;
+  --color: rgba(43, 44, 110, 1);
+  --color-2: rgba(0, 114, 120, 1);
+  --color-3: transparent;
+}
+
+html {
+  height: 100%;
+  display: grid;
+  place-items: center;
+  background: var(--background);
+}
+
+[bdkSplitting] {
+  font-size: 72px;
+  font-family:  "Poppins", sans-serif;
+  letter-spacing: -0.05em;
+  color: var(--color);
+}
+
+.BDK-Splitting .char {
+  background: linear-gradient(-45deg, var(--color) 45%, var(--color-2) 45%, var(--color-2) 50%, var(--color-3) 50%);
+  background-size: 2em 3em;
+  z-index: calc(var(--char-total) - var(--char-index));
+  position: relative;
+  -webkit-animation: bg-pos 2s cubic-bezier(0.6, 0, 0, 1) forwards;
+  animation: bg-pos 2s cubic-bezier(0.6, 0, 0, 1) forwards;
+  -webkit-animation-delay: calc((var(--char-index)) * 0.1s);
+  animation-delay: calc((var(--char-index)) * 0.1s);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+@-webkit-keyframes bg-pos {
+  0% {
+    background-position: 0 0;
+  }
+  80%, 100% {
+    background-position: -1em -1.5em;
+  }
+}
+@keyframes bg-pos {
+  0% {
+    background-position: 0 0;
+  }
+  80%, 100% {
+    background-position: -1em -1.5em;
+  }
+}
+    </style>
+    <link rel="stylesheet" href="./bdkSpilliting.css">
+</head>
+<body>
+  <script>
+    window.onload = function () {
+      // let totalWords = 0;
+      // let totalChars = 0;
+      // let elements = document.querySelectorAll(".bdkSplitting");
+      let elements = document.querySelectorAll("[bdkSplitting]");
+
+   elements.forEach(function (e) {
+        let text = e.textContent;
+        e.textContent = "";
+        e.classList.add("BDK-Splitting");
+        let words = text.split(" ");
+        // let totalChars = 0;
+        // console.log(totalChars)
+        // totalChars = 0
+        let charsT =0;
+        words.forEach(function (word, index) {
+          if (word !== "") {
+            let wordSpan = document.createElement("span");
+          wordSpan.className = "words";
+          wordSpan.setAttribute("data-word", word);
+          // totalWords = totalWords + index;
+
+          // wordSpan.innerText = word;
+     
+          let whitespaceSpan = document.createElement("span");
+          whitespaceSpan.className = "whitespace";
+          whitespaceSpan.innerText = " ";
+
+          e.appendChild(wordSpan);
+          e.appendChild(whitespaceSpan);
+
+          let chars = word.split("");
+      
+          charsT += chars.length
+
+     
+
+          chars.forEach(function (char, index) {
+            let charSpan = document.createElement("span");
+            charSpan.className = "char";
+            charSpan.innerText = char;
+            charSpan.setAttribute("data-char", char);
+            // totalChars =totalChars+ chars.length;
+            wordSpan.appendChild(charSpan);
+          });
+
+          }
+         
+          // totalWords = 0;
+          
+          
+        });
+        e.style = `--word-total: ${words.length}; --char-total:  ${charsT}; font-size: 46px; color: cyan`;
+    
+      });
+    };
+  </script>
+    <div bdkSplitting>Flourish</div>
+
+   
+</body>
+</html>
